@@ -1,19 +1,26 @@
 package com.mogobiz.pay.common
 
+import java.util.{Calendar, Date}
+
 import org.joda.time.DateTime
 
 /**
  * Created by yoannbaudy on 22/06/2015.
  */
 
-case class Cart(currencyCode: String,
+case class CartRate(code: String,
+                    numericCode: Int,
+                    rate: Double = 0.01,
+                    fractionDigits: Int = 2)
+
+case class Cart(rate: CartRate,
                 price: Long = 0,
                 endPrice: Long = 0,
                 reduction: Long = 0,
                 finalPrice: Long = 0,
                 cartItems: Array[CartItem] = Array(),
                 coupons: Array[Coupon] = Array(),
-                customs: Map[String, Any])
+                customs: Map[String, Any] = Map())
 
 case class CartItem(quantity: Int,
                     price: Long,
@@ -27,13 +34,13 @@ case class CartItem(quantity: Int,
                     saleTotalEndPrice: Option[Long],
                     registeredCartItems: Array[RegisteredCartItem],
                     shipping: Option[Shipping],
-                    customs: Map[String, Any])
+                    customs: Map[String, Any] = Map())
 
 case class Coupon(code: String,
                   startDate: Option[DateTime] = None,
                   endDate: Option[DateTime] = None,
                   price: Long = 0,
-                  customs: Map[String, Any])
+                  customs: Map[String, Any] = Map())
 
 case class Shipping(weight: Long,
                     weightUnit: String,
@@ -43,7 +50,7 @@ case class Shipping(weight: Long,
                     linearUnit: String,
                     amount: Long,
                     free: Boolean,
-                    customs: Map[String, Any])
+                    customs: Map[String, Any] = Map())
 
 
 case class RegisteredCartItem(email: String,
