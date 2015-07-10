@@ -16,7 +16,8 @@ case class Cart(count: Int,
                 finalPrice: Long = 0,
                 cartItems: Array[CartItem] = Array(),
                 coupons: Array[Coupon] = Array(),
-                customs: Map[String, Any] = Map())
+                customs: Map[String, Any] = Map(),
+                compagnyAddress : Option[CompanyAddress] = None)
 
 case class CartItem(quantity: Int,
                     price: Long,
@@ -59,3 +60,11 @@ case class RegisteredCartItem(email: String,
                               phone: Option[String] = None,
                               birthdate: Option[DateTime] = None,
                               customs: Map[String, Any])
+
+case class CompanyAddress(company: String,
+                          road: String,
+                          road2: Option[String],
+                          city: String,
+                          zipCode: String,
+                          country: String,
+                          state: Option[String])
