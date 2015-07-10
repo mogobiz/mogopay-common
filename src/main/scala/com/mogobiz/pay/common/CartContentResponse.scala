@@ -1,12 +1,6 @@
 package com.mogobiz.pay.common
 
-import java.util.{Calendar, Date}
-
 import org.joda.time.DateTime
-
-/**
- * Created by yoannbaudy on 22/06/2015.
- */
 
 case class CartRate(code: String,
                     numericCode: Int,
