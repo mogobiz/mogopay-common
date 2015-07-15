@@ -63,7 +63,7 @@ case class RegisteredCartItem(email: String,
 
 case class CompanyAddress(company: String,
                           road: String,
-                          road2: Option[String],
+                          road2: String,
                           city: String,
                           zipCode: String,
                           country: String,
