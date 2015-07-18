@@ -23,7 +23,8 @@ case class Cart(count: Int,
                 customs: Map[String, Any] = Map(),
                 compagnyAddress : Option[CompanyAddress] = None)
 
-case class CartItem(quantity: Int,
+case class CartItem(name: String,
+                    quantity: Int,
                     price: Long,
                     endPrice: Long,
                     tax: Float,
@@ -71,4 +72,5 @@ case class CompanyAddress(company: String,
                           city: String,
                           zipCode: String,
                           country: String,
-                          state: Option[String])
+                          state: Option[String],
+                          phone: Option[String] = None)
