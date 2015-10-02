@@ -18,6 +18,7 @@ case class Cart(count: Int,
                 taxAmount: Long = 0,
                 reduction: Long = 0,
                 finalPrice: Long = 0,
+                shippingRulePrice: Option[Long] = None,
                 cartItems: Array[CartItem] = Array(),
                 coupons: Array[Coupon] = Array(),
                 customs: Map[String, Any] = Map(),
@@ -58,6 +59,9 @@ case class Shipping(weight: Long,
                     amount: Long,
                     free: Boolean,
                     customs: Map[String, Any] = Map())
+
+case class ShippingWithQuantity(quantity: Long,
+                    shipping: Shipping)
 
 
 case class RegisteredCartItem(id: String,
