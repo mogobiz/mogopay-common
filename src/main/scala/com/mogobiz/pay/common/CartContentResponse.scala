@@ -79,4 +79,5 @@ case class CompanyAddress(company: String,
                           zipCode: String,
                           country: String,
                           state: Option[String],
-                          phone: Option[String] = None)
+                          phone: Option[String] = None,
+                          shippingInternational: Boolean)
