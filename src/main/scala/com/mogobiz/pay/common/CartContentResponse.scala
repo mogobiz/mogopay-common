@@ -4,6 +4,8 @@
 
 package com.mogobiz.pay.common
 
+import com.fasterxml.jackson.databind.annotation.{JsonDeserialize, JsonSerialize}
+import com.mogobiz.run.json.{JodaDateTimeOptionDeserializer, JodaDateTimeOptionSerializer}
 import org.joda.time.DateTime
 
 case class CartRate(code: String,
@@ -45,7 +47,11 @@ case class CartItem(id: String,
                     customs: Map[String, Any] = Map())
 
 case class Coupon(code: String,
+                  @JsonSerialize(using = classOf[JodaDateTimeOptionSerializer])
+                  @JsonDeserialize(using = classOf[JodaDateTimeOptionDeserializer])
                   startDate: Option[DateTime] = None,
+                  @JsonSerialize(using = classOf[JodaDateTimeOptionSerializer])
+                  @JsonDeserialize(using = classOf[JodaDateTimeOptionDeserializer])
                   endDate: Option[DateTime] = None,
                   price: Long = 0,
                   customs: Map[String, Any] = Map())
@@ -69,6 +75,8 @@ case class RegisteredCartItem(id: String,
                               firstname: Option[String] = None,
                               lastname: Option[String] = None,
                               phone: Option[String] = None,
+                              @JsonSerialize(using = classOf[JodaDateTimeOptionSerializer])
+                              @JsonDeserialize(using = classOf[JodaDateTimeOptionDeserializer])
                               birthdate: Option[DateTime] = None,
                               customs: Map[String, Any])
 
