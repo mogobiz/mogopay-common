@@ -1,1 +1,3 @@
 name := "mogopay-common"
+
+scalariformSettings
