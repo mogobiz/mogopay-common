@@ -28,6 +28,8 @@ case class Cart(count: Int,
 
 case class CartItem(id: String,
   name: String,
+  picture: String,
+  shopUrl: String,
   quantity: Int,
   price: Long,
   endPrice: Long,
@@ -44,6 +46,7 @@ case class CartItem(id: String,
   saleTotalTaxAmount: Long = 0,
   registeredCartItems: Array[RegisteredCartItem],
   shipping: Option[Shipping],
+  downloadableLink: String,
   customs: Map[String, Any] = Map())
 
 case class Coupon(code: String,
@@ -71,6 +74,7 @@ case class RegisteredCartItem(id: String,
   lastname: Option[String] = None,
   phone: Option[String] = None,
   @JsonSerialize(using = classOf[JodaDateTimeOptionSerializer])@JsonDeserialize(using = classOf[JodaDateTimeOptionDeserializer]) birthdate: Option[DateTime] = None,
+  qrCodeContent: Option[String] = None,
   customs: Map[String, Any])
 
 case class CompanyAddress(company: String,
