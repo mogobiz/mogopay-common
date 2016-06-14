@@ -5,9 +5,8 @@
 package com.mogobiz.pay.common
 
 import com.fasterxml.jackson.databind.annotation.{ JsonDeserialize, JsonSerialize }
-import com.mogobiz.run.json.{ JodaDateTimeOptionDeserializer, JodaDateTimeOptionSerializer }
+import com.mogobiz.json.{ JodaDateTimeOptionDeserializer, JodaDateTimeOptionSerializer }
 import org.joda.time.DateTime
-
 case class CartRate(code: String,
   numericCode: Int,
   rate: Double = 0.01,
