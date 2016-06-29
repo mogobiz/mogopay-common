@@ -47,6 +47,7 @@ case class CartItem(id: String,
   registeredCartItems: Array[RegisteredCartItem],
   shipping: Option[Shipping],
   downloadableLink: String,
+  externalCodes: Option[String],
   customs: Map[String, Any] = Map())
 
 case class Coupon(code: String,
@@ -56,14 +57,17 @@ case class Coupon(code: String,
   customs: Map[String, Any] = Map())
 
 case class Shipping(weight: Long,
-  weightUnit: String,
-  width: Long,
-  height: Long,
-  depth: Long,
-  linearUnit: String,
-  amount: Long,
-  free: Boolean,
-  customs: Map[String, Any] = Map())
+    weightUnit: String,
+    width: Long,
+    height: Long,
+    depth: Long,
+    linearUnit: String,
+    amount: Long,
+    free: Boolean,
+    customs: Map[String, Any] = Map()) {
+
+  val isDefine = !(height == 0 || width == 0 || weight == 0 || weightUnit == null || weightUnit.isEmpty || linearUnit == null || linearUnit.isEmpty)
+}
 
 case class ShippingWithQuantity(quantity: Long,
   shipping: Shipping)
