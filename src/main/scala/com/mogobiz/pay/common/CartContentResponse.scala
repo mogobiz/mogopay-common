@@ -27,28 +27,31 @@ case class Cart(count: Int,
   compagnyAddress: Option[CompanyAddress] = None)
 
 case class CartItem(id: String,
-  name: String,
-  picture: String,
-  shopUrl: String,
-  quantity: Int,
-  price: Long,
-  endPrice: Long,
-  tax: Float,
-  taxAmount: Long = 0,
-  totalPrice: Long,
-  totalEndPrice: Long,
-  totalTaxAmount: Long = 0,
-  salePrice: Long,
-  saleEndPrice: Long,
-  saleTaxAmount: Long = 0,
-  saleTotalPrice: Long,
-  saleTotalEndPrice: Long,
-  saleTotalTaxAmount: Long = 0,
-  registeredCartItems: Array[RegisteredCartItem],
-  shipping: Option[Shipping],
-  downloadableLink: String,
-  externalCodes: Option[String],
-  customs: Map[String, Any] = Map())
+    name: String,
+    picture: String,
+    shopUrl: String,
+    quantity: Int,
+    price: Long,
+    endPrice: Long,
+    tax: Float,
+    taxAmount: Long = 0,
+    totalPrice: Long,
+    totalEndPrice: Long,
+    totalTaxAmount: Long = 0,
+    salePrice: Long,
+    saleEndPrice: Long,
+    saleTaxAmount: Long = 0,
+    saleTotalPrice: Long,
+    saleTotalEndPrice: Long,
+    saleTotalTaxAmount: Long = 0,
+    registeredCartItems: Array[RegisteredCartItem],
+    shipping: Option[Shipping],
+    downloadableLink: String,
+    externalCodes: List[ExternalCode],
+    customs: Map[String, Any] = Map()) {
+
+  val isExternalItem = externalCodes.nonEmpty
+}
 
 case class Coupon(code: String,
   @JsonSerialize(using = classOf[JodaDateTimeOptionSerializer])@JsonDeserialize(using = classOf[JodaDateTimeOptionDeserializer]) startDate: Option[DateTime] = None,
@@ -90,3 +93,11 @@ case class CompanyAddress(company: String,
   state: Option[String],
   phone: Option[String] = None,
   shippingInternational: Boolean)
+
+case class ExternalCode(val provider: ExternalProvider.ExternalProvider, val code: String)
+
+object ExternalProvider {
+  type ExternalProvider = String
+
+  val MIRAKL = "MIRAKL"
+}
