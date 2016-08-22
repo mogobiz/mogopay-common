@@ -95,6 +95,18 @@ case class CompanyAddress(company: String,
 
 case class ExternalCode(val provider: ExternalProvider.ExternalProvider, val code: String)
 
+object ExternalCode {
+  def fromString(externalCode: Option[String]) = {
+    externalCode.map { externalCode =>
+      externalCode.split(",").toList.map { ec =>
+        val providerAndCode = ec.split("::")
+        if (providerAndCode.length == 2) Some(ExternalCode(providerAndCode(0), providerAndCode(1)))
+        else None
+      }.flatten
+    }.getOrElse(Nil)
+  }
+}
+
 object ExternalProvider {
   type ExternalProvider = String
 
