@@ -4,8 +4,8 @@
 
 package com.mogobiz.pay.common
 
-import com.fasterxml.jackson.databind.annotation.{ JsonDeserialize, JsonSerialize }
-import com.mogobiz.run.json.{ JodaDateTimeOptionDeserializer, JodaDateTimeOptionSerializer }
+import com.fasterxml.jackson.databind.annotation.{JsonDeserialize, JsonSerialize}
+import com.mogobiz.run.json.{JodaDateTimeOptionDeserializer, JodaDateTimeOptionSerializer}
 import org.joda.time.DateTime
 
 case class CartRate(code: String,
@@ -47,10 +47,14 @@ case class CartItem(id: String,
     registeredCartItems: List[RegisteredCartItem],
     shipping: Option[Shipping],
     downloadableLink: String,
-    externalCodes: List[ExternalCode],
+    externalCode: Option[ExternalCode],
     customs: Map[String, Any] = Map()) {
 
-  val isExternalItem = externalCodes.nonEmpty
+  val isExternalItem = externalCode.nonEmpty
+
+  def isExternalItemFor(provider: ExternalProvider.ExternalProvider) = {
+    externalCode.map {_.provider == provider}.getOrElse(false)
+  }
 }
 
 case class Coupon(code: String,
@@ -93,23 +97,23 @@ case class CompanyAddress(company: String,
                           phone: Option[String] = None,
                           shippingInternational: Boolean)
 
-case class ExternalCode(val provider: ExternalProvider.ExternalProvider, val code: String)
+case class ExternalCode(val provider: ExternalProvider.ExternalProvider, val code: String)/* {
+  override def equals(obj: scala.Any): Boolean = obj match {
+    case ExternalCode(objProvider, objCode) => objProvider.equals(provider) && objCode.equals(code)
+    case _ => false
+  }
+}*/
 
 object ExternalCode {
-  def fromString(externalCode: Option[String]) : List[ExternalCode] = {
+  def fromString(externalCode: Option[String]) : Option[ExternalCode] = {
     externalCode.map { externalCode =>
-      externalCode.split(",").toList.map { ec =>
-        val providerAndCode = ec.split("::")
-        if (providerAndCode.length == 2) Some(ExternalCode(providerAndCode(0), providerAndCode(1)))
-        else None
-      }.flatten
-    }.getOrElse(Nil)
+      val providerAndCode = externalCode.split("::")
+      if (providerAndCode.length == 2) Some(ExternalCode(providerAndCode(0), providerAndCode(1)))
+      else None
+    }.getOrElse(None)
   }
-  def toString(externalCodes: List[ExternalCode]) : Option[String] = {
-    if (externalCodes == Nil) None
-    else {
-      Some(externalCodes.map {externalCode: ExternalCode => (externalCode.provider + "::" + externalCode.code)}.mkString(","))
-    }
+  def toString(externalCodes: Option[ExternalCode]) : Option[String] = {
+    externalCodes.map {externalCode: ExternalCode => (externalCode.provider + "::" + externalCode.code)}
   }
 }
 
