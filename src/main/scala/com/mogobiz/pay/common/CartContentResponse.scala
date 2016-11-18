@@ -98,18 +98,17 @@ case class CompanyAddress(company: String,
                           phone: Option[String] = None,
                           shippingInternational: Boolean)
 
-case class ExternalCode(val provider: ExternalProvider.ExternalProvider, val code: String)/* {
-  override def equals(obj: scala.Any): Boolean = obj match {
-    case ExternalCode(objProvider, objCode) => objProvider.equals(provider) && objCode.equals(code)
-    case _ => false
-  }
-}*/
+case class ExternalCode(val provider: ExternalProvider.ExternalProvider, val code: String)
 
 object ExternalCode {
   def fromString(externalCode: Option[String]) : Option[ExternalCode] = {
     externalCode.map { externalCode =>
-      val providerAndCode = externalCode.split("::")
-      if (providerAndCode.length == 2) Some(ExternalCode(providerAndCode(0), providerAndCode(1)))
+      val index = externalCode.indexOf("::")
+      if (index > 0) {
+        val provider = externalCode.substring(0, index).toUpperCase
+        val code = externalCode.substring(index + 2)
+        Some(ExternalCode(provider, code))
+      }
       else None
     }.getOrElse(None)
   }
